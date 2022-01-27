@@ -21,8 +21,6 @@ def app():
 
 @pytest.fixture
 def client(app):
-
-
     with app.test_client() as client:
         with app.app_context():
             init_driver(
