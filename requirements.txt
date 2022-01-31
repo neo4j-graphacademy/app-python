@@ -33,7 +33,6 @@ pytz==2021.3
 requests==2.26.0
 six==1.16.0
 toml==0.10.2
-UNKNOWN==0.0.0
 urllib3==1.26.7
 virtualenv==20.10.0
 Werkzeug==2.0.2
