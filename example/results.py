@@ -206,7 +206,7 @@ def get_node_example(tx, movie):
 
     # tag::node[]
     for record in result:
-        node = record["m"]
+        node = record["movie"]
         # end::node[]
 
         # tag::node_info[]
