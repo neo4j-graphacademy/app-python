@@ -17,7 +17,7 @@ class MovieDAO:
      used to skip a certain number of rows.
 
      If a user_id value is suppled, a `favorite` boolean property should be returned to
-     signify whether the user has aded the movie to their "My Favorites" list.
+     signify whether the user has added the movie to their "My Favorites" list.
     """
     # tag::all[]
     def all(self, sort, order, limit=6, skip=0, user_id=None):
@@ -35,7 +35,7 @@ class MovieDAO:
     The `skip` variable should be used to skip a certain number of rows.
 
     If a user_id value is suppled, a `favorite` boolean property should be returned to
-    signify whether the user has aded the movie to their "My Favorites" list.
+    signify whether the user has added the movie to their "My Favorites" list.
     """
     # tag::getByGenre[]
     def get_by_genre(self, name, sort='title', order='ASC', limit=6, skip=0, user_id=None):
@@ -56,7 +56,7 @@ class MovieDAO:
     The `skip` variable should be used to skip a certain number of rows.
 
     If a user_id value is suppled, a `favorite` boolean property should be returned to
-    signify whether the user has aded the movie to their "My Favorites" list.
+    signify whether the user has added the movie to their "My Favorites" list.
     """
     # tag::getForActor[]
     def get_for_actor(self, id, sort='title', order='ASC', limit=6, skip=0, user_id=None):
@@ -77,7 +77,7 @@ class MovieDAO:
     The `skip` variable should be used to skip a certain number of rows.
 
     If a user_id value is suppled, a `favorite` boolean property should be returned to
-    signify whether the user has aded the movie to their "My Favorites" list.
+    signify whether the user has added the movie to their "My Favorites" list.
     """
     # tag::getForDirector[]
     def get_for_director(self, id, sort='title', order='ASC', limit=6, skip=0, user_id=None):
@@ -95,7 +95,7 @@ class MovieDAO:
     The number of incoming RATED relationships should also be returned as `ratingCount`
 
     If a user_id value is suppled, a `favorite` boolean property should be returned to
-    signify whether the user has aded the movie to their "My Favorites" list.
+    signify whether the user has added the movie to their "My Favorites" list.
     """
     # tag::findById[]
     def find_by_id(self, id, user_id=None):
@@ -116,7 +116,7 @@ class MovieDAO:
     The `skip` variable should be used to skip a certain number of rows.
 
     If a user_id value is suppled, a `favorite` boolean property should be returned to
-    signify whether the user has aded the movie to their "My Favorites" list.
+    signify whether the user has added the movie to their "My Favorites" list.
     """
     # tag::getSimilarMovies[]
     def get_similar_movies(self, id, limit=6, skip=0, user_id=None):
