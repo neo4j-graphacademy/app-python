@@ -30,7 +30,7 @@ From the point of view of the course, you can go ahead and ignore them.
 ----
 python -m venv neoflix
 
-source sandbox/bin/activate
+source neoflix/bin/activate
 ----
 
 
