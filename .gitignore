@@ -13,5 +13,7 @@ dist/
 build/
 *.egg-info/
 neoflix/
+sandbox/
+.tool-versions
 .DS_Store
 .env
