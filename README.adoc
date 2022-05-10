@@ -28,9 +28,9 @@ From the point of view of the course, you can go ahead and ignore them.
 
 [source,sh]
 ----
-python -m venv neoflix
+python -m venv sandbox
 
-source neoflix/bin/activate
+source sandbox/bin/activate
 ----
 
 
