@@ -1,5 +1,6 @@
-from flask import Blueprint, current_app, request, jsonify
+from flask import Blueprint, current_app, jsonify, request
 from flask_jwt import current_identity, jwt_required
+
 from api.dao.favorites import FavoriteDAO
 from api.dao.ratings import RatingDAO
 

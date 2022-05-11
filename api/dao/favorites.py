@@ -1,5 +1,6 @@
-from api.data import popular, goodfellas
+from api.data import goodfellas, popular
 from api.exceptions.notfound import NotFoundException
+
 
 class FavoriteDAO:
     """
