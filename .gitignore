@@ -12,6 +12,6 @@ htmlcov/
 dist/
 build/
 *.egg-info/
-neoflix/
+sandbox/
 .DS_Store
 .env
