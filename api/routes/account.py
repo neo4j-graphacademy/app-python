@@ -1,5 +1,6 @@
 from flask import Blueprint, current_app, request, jsonify
-from flask_jwt import current_identity, jwt_required
+from flask_jwt_extended import current_user, jwt_required
+
 from api.dao.favorites import FavoriteDAO
 from api.dao.ratings import RatingDAO
 
@@ -8,12 +9,13 @@ account_routes = Blueprint("account", __name__, url_prefix="/api/account")
 @account_routes.route('/', methods=['GET'])
 @jwt_required()
 def get_profile():
-    return jsonify(current_identity)
+    return jsonify(current_user)
 
 @account_routes.route('/favorites', methods=['GET'])
+@jwt_required()
 def get_favorites():
     # Get user ID from JWT
-    user_id = current_identity["sub"]
+    user_id = current_user["sub"]
 
     # Get search parameters
     sort = request.args.get("sort", "title")
@@ -32,7 +34,7 @@ def get_favorites():
 @jwt_required()
 def add_favorite(movie_id):
     # Get user ID from JWT
-    user_id = current_identity["sub"]
+    user_id = current_user["sub"]
 
     # Create the DAO
     dao = FavoriteDAO(current_app.driver)
@@ -52,7 +54,7 @@ def add_favorite(movie_id):
 @jwt_required()
 def save_rating(movie_id):
     # Get user ID from JWT
-    user_id = current_identity["sub"]
+    user_id = current_user["sub"]
 
     # Get rating from Request
     form_data = request.get_json()

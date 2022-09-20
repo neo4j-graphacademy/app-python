@@ -1,5 +1,5 @@
 from flask import Blueprint, current_app, request, jsonify
-from flask_jwt import current_identity
+from flask_jwt_extended import current_user
 
 from api.dao.auth import AuthDAO
 

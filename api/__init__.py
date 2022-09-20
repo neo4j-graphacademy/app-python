@@ -1,10 +1,12 @@
 from datetime import timedelta
+from email import policy
 import os
 
 from flask import Flask
 from flask.helpers import send_from_directory
 
-from flask_jwt import JWT
+from flask_jwt_extended import JWTManager
+from flask_cors import CORS
 
 from api.exceptions.notfound import NotFoundException
 
@@ -30,7 +32,7 @@ def create_app(test_config=None):
         NEO4J_USERNAME=os.getenv('NEO4J_USERNAME'),
         NEO4J_PASSWORD=os.getenv('NEO4J_PASSWORD'),
         NEO4J_DATABASE=os.getenv('NEO4J_DATABASE'),
-        SECRET_KEY=os.getenv('JWT_SECRET'),
+        JWT_SECRET_KEY=os.getenv('JWT_SECRET'),
         JWT_AUTH_HEADER_PREFIX="Bearer",
         JWT_VERIFY_CLAIMS="signature",
         JWT_EXPIRATION_DELTA=timedelta(360)
@@ -54,15 +56,12 @@ def create_app(test_config=None):
         )
 
     # JWT
-    def authenticate(username, password):
-        pass
+    jwt = JWTManager(app)
 
-    def identify(payload):
-        payload["userId"] = payload["sub"]
-        return payload
-
-    jwt = JWT(app, authenticate, identify)
-
+    CORS(app, 
+        resources={r"/*": {"origins": ["http://localhost:3000", "http://127.0.0.1:3000"]}}
+    )
+    
     # Register Routes
     app.register_blueprint(auth_routes)
     app.register_blueprint(account_routes)

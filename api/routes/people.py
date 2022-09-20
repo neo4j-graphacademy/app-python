@@ -1,5 +1,4 @@
 from flask import Blueprint, current_app, request, jsonify
-from flask_jwt import current_identity
 
 from api.dao.people import PeopleDAO
 
