@@ -11,6 +11,7 @@ def get_profile():
     return jsonify(current_identity)
 
 @account_routes.route('/favorites', methods=['GET'])
+@jwt_required()
 def get_favorites():
     # Get user ID from JWT
     user_id = current_identity["sub"]
