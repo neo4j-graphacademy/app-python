@@ -37,17 +37,39 @@ class AuthDAO:
                 {"email": "An account already exists with this email"}
             )
 
-        # Build a set of claims
-        payload = {
-            "userId": "00000000-0000-0000-0000-000000000000",
-            "email": email,
-            "name": name,
-        }
+        # tag::create[]
+        def create_user(tx, email, encrypted, name):
+            return tx.run(""" // <1>
+                CREATE (u:User {
+                    userId: randomUuid(),
+                    email: $email,
+                    password: $encrypted,
+                    name: $name
+                })
+                RETURN u
+            """,
+            email=email, encrypted=encrypted, name=name # <2>
+            ).single() # <3>
+        # end::create[]
 
-        # Generate Token
-        payload["token"] = self._generate_token(payload)
+        # tag::call_create[]
+        with self.driver.session() as session:
+            result = session.execute_write(create_user, email, encrypted, name)
+            # end::call_create[]
 
-        return payload
+            # tag::extract[]
+            user = result['u']
+
+            payload = {
+                "userId": user["userId"],
+                "email":  user["email"],
+                "name":  user["name"],
+            }
+
+            payload["token"] = self._generate_token(payload)
+
+            return payload
+            # end::extract[]
     # end::register[]
 
     """
@@ -101,7 +123,7 @@ class AuthDAO:
             payload,
             self.jwt_secret,
             algorithm='HS256'
-        ).decode('ascii')
+        )
     # end::generate[]
 
     """
