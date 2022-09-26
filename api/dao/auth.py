@@ -30,13 +30,6 @@ class AuthDAO:
     def register(self, email, plain_password, name):
         encrypted = bcrypt.hashpw(plain_password.encode("utf8"), bcrypt.gensalt()).decode('utf8')
 
-        # TODO: Handle unique constraint error
-        if email != "graphacademy@neo4j.com":
-            raise ValidationException(
-                f"An account already exists with the email address {email}",
-                {"email": "An account already exists with this email"}
-            )
-
         # tag::create[]
         def create_user(tx, email, encrypted, name):
             return tx.run(""" // <1>
@@ -52,24 +45,32 @@ class AuthDAO:
             ).single() # <3>
         # end::create[]
 
-        # tag::call_create[]
-        with self.driver.session() as session:
-            result = session.execute_write(create_user, email, encrypted, name)
-            # end::call_create[]
+        # tag::catch[]
+        try:
+            # tag::call_create[]
+            with self.driver.session() as session:
+                result = session.execute_write(create_user, email, encrypted, name)
+                # end::call_create[]
 
-            # tag::extract[]
-            user = result['u']
+                # tag::extract[]
+                user = result['u']
 
-            payload = {
-                "userId": user["userId"],
-                "email":  user["email"],
-                "name":  user["name"],
-            }
+                payload = {
+                    "userId": user["userId"],
+                    "email":  user["email"],
+                    "name":  user["name"],
+                }
 
-            payload["token"] = self._generate_token(payload)
+                payload["token"] = self._generate_token(payload)
 
-            return payload
-            # end::extract[]
+                return payload
+                # end::extract[]
+        except ConstraintError as err:
+            # Pass error details through to a ValidationException
+            raise ValidationException(err.message, {
+                "email": err.message
+            })
+        # end::catch[]
     # end::register[]
 
     """
