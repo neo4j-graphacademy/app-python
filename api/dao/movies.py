@@ -49,7 +49,7 @@ class MovieDAO:
         # tag::session[]
         with self.driver.session() as session:
         # end::session[]
-            return session.execute_read(get_movies, sort, order, limit, skip, user_id)
+            return session.read_transaction(get_movies, sort, order, limit, skip, user_id)
             # end::return[]
     # end::all[]
 
