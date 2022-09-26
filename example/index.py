@@ -85,7 +85,7 @@ with driver.session() as session:
         """, title=title)
 
     # Execute get_movies within a Read Transaction
-    session.read_transaction(get_movies,
+    session.execute_read(get_movies,
         title="Arthur" # <2>
     )
     # end::session.readTransaction[]
@@ -102,7 +102,7 @@ with driver.session() as session:
 
 
     # Execute the `create_person` "unit of work" within a write transaction
-    session.write_transaction(create_person, name="Michael")
+    session.execute_write(create_person, name="Michael")
     # end::session.writeTransaction[]
     """
 
@@ -144,8 +144,8 @@ def create_person(name):
     session = driver.session(database="people")
 
     # Create a node within a write transaction
-    record = session.write_transaction(create_person_work,
-                                        name=name)
+    record = session.execute_write(create_person_work,
+                                    name=name)
 
     # Get the `p` value from the first record
     person = record["p"]

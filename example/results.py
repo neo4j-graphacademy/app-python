@@ -26,7 +26,7 @@ def get_actors(tx, movie): # <1>
 # Open a Session
 with driver.session() as session:
     # Run the unit of work within a Read Transaction
-    actors = session.read_transaction(get_actors, movie="The Green Mile") # <2>
+    actors = session.execute_read(get_actors, movie="The Green Mile") # <2>
 
     for record in actors:
         print(record["p"])
