@@ -24,8 +24,8 @@ class MovieDAO:
         # tag::get_movies[]
         # Define the Unit of Work
         def get_movies(tx, sort, order, limit, skip, user_id):
-        # end::get_movies[]
-            # tag::allcypher[]
+        # tag::end_movies[]
+            # tag::all_cypher[]
             # Get User favorites
             favorites = self.get_user_favorites(tx, user_id)
 
@@ -44,7 +44,7 @@ class MovieDAO:
 
             # Run the statement within the transaction passed as the first argument
             result = tx.run(cypher, limit=limit, skip=skip, user_id=user_id, favorites=favorites)
-            # end::allcypher[]
+            # end::all_cypher[]
 
             # tag::allmovies[]
             # Extract a list of Movies from the Result
