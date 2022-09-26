@@ -18,7 +18,7 @@ name = 'Authenticated User'
 #             return tx.run("MATCH (u:User {email: $email}) DETACH DELETE u", email=email).consume()
 
 #         with driver.session() as session:
-#             session.write_transaction(delete_user)
+#             session.execute_write(delete_user)
 #             session.close()
 
 
@@ -31,7 +31,7 @@ def test_authenticate_user(app):
             return tx.run("MATCH (u:User {email: $email}) DETACH DELETE u", email=email).consume()
 
         with driver.session() as session:
-            session.write_transaction(delete_user)
+            session.execute_write(delete_user)
             session.close()
 
         # Run the test
@@ -77,4 +77,4 @@ def test_set_GA_timestamp_to_verify_test(app):
         driver = get_driver()
 
         with driver.session() as session:
-            session.write_transaction(update_user)
+            session.execute_write(update_user)

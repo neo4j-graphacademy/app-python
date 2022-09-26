@@ -21,7 +21,7 @@ def before_all(app):
             """, user=user, movie=movie, email=email).consume()
 
         with driver.session() as session:
-            session.write_transaction(merge_data)
+            session.execute_write(merge_data)
             session.close()
 
 def test_store_integer(app):

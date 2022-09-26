@@ -19,7 +19,7 @@ def before_all(app):
             return tx.run("MATCH (u:User {email: $email}) DETACH DELETE u", email=email).consume()
 
         with driver.session() as session:
-            session.write_transaction(delete_user)
+            session.execute_write(delete_user)
             session.close()
 
 
@@ -39,7 +39,7 @@ def test_unique_constraint(app):
 
     with app.app_context():
         with get_driver().session() as session:
-            res = session.read_transaction(get_constraints)
+            res = session.execute_read(get_constraints)
 
             assert res is not None
 

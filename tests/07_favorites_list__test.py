@@ -15,7 +15,7 @@ def before_all(app):
         driver = get_driver()
 
         with driver.session() as session:
-            session.write_transaction(lambda tx: tx.run("""
+            session.execute_write(lambda tx: tx.run("""
                 MERGE (u:User {userId: $userId})
                 SET u.email = $email
             """, userId = user_id, email=email))
