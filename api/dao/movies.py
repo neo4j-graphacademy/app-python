@@ -149,7 +149,7 @@ class MovieDAO:
     """
     # tag::getForDirector[]
     def get_for_director(self, id, sort='title', order='ASC', limit=6, skip=0, user_id=None):
-                # Get Movies directed by a Person
+        # Get Movies directed by a Person
         def get_movies_for_director(tx, id, sort, order, limit, skip, user_id):
             favorites = self.get_user_favorites(tx, user_id)
 
