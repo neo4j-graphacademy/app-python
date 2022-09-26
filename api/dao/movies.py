@@ -24,8 +24,8 @@ class MovieDAO:
         # tag::get_movies[]
         # Define the Unit of Work
         def get_movies(tx, sort, order, limit, skip, user_id):
-        # tag::end_movies[]
-            # tag::all_cypher[]
+        # end::get_movies[]
+            # tag::allcypher[]
             # Define the cypher statement
             cypher = """
                 MATCH (m:Movie)
@@ -38,7 +38,7 @@ class MovieDAO:
 
             # Run the statement within the transaction passed as the first argument
             result = tx.run(cypher, limit=limit, skip=skip, user_id=user_id)
-            # end::all_cypher[]
+            # end::allcypher[]
 
             # tag::allmovies[]
             # Extract a list of Movies from the Result
