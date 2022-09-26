@@ -51,10 +51,24 @@ class PeopleDAO:
     """
     # tag::findById[]
     def find_by_id(self, id):
-        # TODO: Find a user by their ID
+         # Find a user by their ID
+        def get_person(tx, id):
+            row = tx.run("""
+                MATCH (p:Person {tmdbId: $id})
+                RETURN p {
+                    .*,
+                    actedCount: size((p)-[:ACTED_IN]->()),
+                    directedCount: size((p)-[:DIRECTED]->())
+                } AS person
+            """, id=id).single()
 
-        return pacino
+            if row == None:
+                raise NotFoundException()
 
+            return row.get("person")
+
+        with self.driver.session() as session:
+            return session.execute_read(get_person, id)
     # end::findById[]
 
     """
@@ -63,7 +77,23 @@ class PeopleDAO:
     """
     # tag::getSimilarPeople[]
     def get_similar_people(self, id, limit = 6, skip = 0):
-        # TODO: Get a list of similar people to the person by their id
+        # Get a list of similar people to the person by their id
+        def get_similar_people(tx, id, skip, limit):
+            result = tx.run("""
+                MATCH (:Person {tmdbId: $id})-[:ACTED_IN|DIRECTED]->(m)<-[r:ACTED_IN|DIRECTED]-(p)
+                RETURN p {
+                    .*,
+                    actedCount: size((p)-[:ACTED_IN]->()),
+                    directedCount: size((p)-[:DIRECTED]->()),
+                    inCommon: collect(m {.tmdbId, .title, type: type(r)})
+                } AS person
+                ORDER BY size(person.inCommon) DESC
+                SKIP $skip
+                LIMIT $limit
+            """, id=id, skip=skip, limit=limit)
 
-        return people[skip:limit]
+            return [ row.get("person") for row in result ]
+
+        with self.driver.session() as session:
+            return session.execute_read(get_similar_people, id, skip, limit)
     # end::getSimilarPeople[]
