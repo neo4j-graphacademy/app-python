@@ -1,4 +1,7 @@
-venv/
+neo4j/data/
+neo4j/logs
+
+.venv/
 
 *.pyc
 __pycache__/
@@ -14,4 +17,3 @@ build/
 *.egg-info/
 neoflix/
 .DS_Store
-.env
