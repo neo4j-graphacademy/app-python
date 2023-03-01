@@ -31,9 +31,9 @@ def test_unique_constraint(app):
 
     def get_constraints(tx):
         return tx.run("""
-            CALL db.constraints()
-            YIELD name, description
-            WHERE description = 'CONSTRAINT ON ( user:User ) ASSERT (user.email) IS UNIQUE'
+            SHOW CONSTRAINTS
+            YIELD name, labelsOrTypes, properties
+            WHERE labelsOrTypes = ['User'] AND properties = ['email']
             RETURN *
         """).single()
 
@@ -53,4 +53,3 @@ def test_validation_error(app):
 
         with pytest.raises(ValidationException):
             dao.register(email, password, name)
-
