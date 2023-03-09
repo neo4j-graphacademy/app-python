@@ -24,7 +24,7 @@ Using these tags means that we can use a macro to include portions of code direc
 From the point of view of the course, you can go ahead and ignore them.
 
 
-== Setting up your evironment
+== Setting up your environment
 
 [source,sh]
 ----
