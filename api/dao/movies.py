@@ -29,7 +29,7 @@ class MovieDAO:
             # Define the cypher statement
             cypher = """
                 MATCH (m:Movie)
-                WHERE exists(m.`{0}`)
+                WHERE m.`{0}` IS NOT NULL
                 RETURN m {{ .* }} AS movie
                 ORDER BY m.`{0}` {1}
                 SKIP $skip
@@ -44,7 +44,7 @@ class MovieDAO:
             # Extract a list of Movies from the Result
             return [row.value("movie") for row in result]
             # end::allmovies[]
-        
+
         # tag::return[]
         # tag::session[]
         with self.driver.session() as session:
