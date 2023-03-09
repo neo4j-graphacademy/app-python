@@ -79,7 +79,7 @@ class MovieDAO:
 
             cypher = """
                 MATCH (m:Movie)-[:IN_GENRE]->(:Genre {{name: $name}})
-                WHERE exists(m.`{0}`)
+                WHERE m.`{0}` IS NOT NULL
                 RETURN m {{
                     .*,
                     favorite: m.tmdbId in $favorites
@@ -117,7 +117,7 @@ class MovieDAO:
 
             cypher = """
                 MATCH (:Person {{tmdbId: $id}})-[:ACTED_IN]->(m:Movie)
-                WHERE exists(m.`{0}`)
+                WHERE m.`{0}` IS NOT NULL
                 RETURN m {{
                     .*,
                     favorite: m.tmdbId in $favorites
@@ -155,7 +155,7 @@ class MovieDAO:
 
             cypher = """
                 MATCH (:Person {{tmdbId: $id}})-[:DIRECTED]->(m:Movie)
-                WHERE exists(m.`{0}`)
+                WHERE m.`{0}` IS NOT NULL
                 RETURN m {{
                     .*,
                     favorite: m.tmdbId in $favorites
