@@ -6,6 +6,6 @@
 
 tasks:
   - init: >
-      pyenv install 3.11 &&
+      pyenv install --force 3.11 &&
       pyenv global 3.11 &&
       pip install -r requirements.txt
