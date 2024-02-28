@@ -39,6 +39,6 @@ source neoflix/bin/activate
 
 [source,sh]
 export FLASK_APP=api
-export FLASK_ENV=development
+export FLASK_DEBUG=True
 flask run
 
