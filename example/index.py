@@ -19,10 +19,17 @@ auth = (username, password)
 
 # tag::driver[]
 # Create a new Driver instance
+with GraphDatabase.driver(
+    "neo4j://localhost:7687", 
+    auth=("neo4j", "neo")
+) as driver:
+    # Execute code before the driver graciously closes itself
+# end::driver[]
+    pass
+
+
 driver = GraphDatabase.driver("neo4j://localhost:7687",
     auth=("neo4j", "neo"))
-# end::driver[]
-
 
 """
 Here is the pseudocode for creating the Driver:
