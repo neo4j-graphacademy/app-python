@@ -39,7 +39,7 @@ class GenreDAO:
                 }
                 RETURN g {
                     .*,
-                    movies: size((g)<-[:IN_GENRE]-(:Movie)),
+                    movies: count { (g)<-[:IN_GENRE]-(:Movie) },
                     poster: poster
                 } AS genre
                 ORDER BY g.name ASC
@@ -72,7 +72,7 @@ class GenreDAO:
                 WITH g, head(collect(m)) AS movie
                 RETURN g {
                     .name,
-                    movies: size((g)<-[:IN_GENRE]-()),
+                    movies: count { (g)<-[:IN_GENRE]-() },
                     poster: movie.poster
                 } AS genre
             """, name=name).single()
