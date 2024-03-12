@@ -57,8 +57,8 @@ class PeopleDAO:
                 MATCH (p:Person {tmdbId: $id})
                 RETURN p {
                     .*,
-                    actedCount: size((p)-[:ACTED_IN]->()),
-                    directedCount: size((p)-[:DIRECTED]->())
+                    actedCount: count {(p)-[:ACTED_IN]->()},
+                    directedCount: count {(p)-[:DIRECTED]->()}
                 } AS person
             """, id=id).single()
 
@@ -83,8 +83,8 @@ class PeopleDAO:
                 MATCH (:Person {tmdbId: $id})-[:ACTED_IN|DIRECTED]->(m)<-[r:ACTED_IN|DIRECTED]-(p)
                 RETURN p {
                     .*,
-                    actedCount: size((p)-[:ACTED_IN]->()),
-                    directedCount: size((p)-[:DIRECTED]->()),
+                    actedCount: count {(p)-[:ACTED_IN]->()},
+                    directedCount: count {(p)-[:DIRECTED]->()},
                     inCommon: collect(m {.tmdbId, .title, type: type(r)})
                 } AS person
                 ORDER BY size(person.inCommon) DESC
