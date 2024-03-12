@@ -56,9 +56,9 @@ class PeopleDAO:
             row = tx.run("""
                 MATCH (p:Person {tmdbId: $id})
                 RETURN p {
-                    .*,
-                    actedCount: count {(p)-[:ACTED_IN]->()},
-                    directedCount: count {(p)-[:DIRECTED]->()}
+                .*,
+                actedCount: count {(p)-[:ACTED_IN]->()},
+                directedCount: count {(p)-[:DIRECTED]->()}
                 } AS person
             """, id=id).single()
 
@@ -81,11 +81,12 @@ class PeopleDAO:
         def get_similar_people(tx, id, skip, limit):
             result = tx.run("""
                 MATCH (:Person {tmdbId: $id})-[:ACTED_IN|DIRECTED]->(m)<-[r:ACTED_IN|DIRECTED]-(p)
+                WITH p, collect(m {.tmdbId, .title, type: type(r)}) AS inCommon
                 RETURN p {
-                    .*,
-                    actedCount: count {(p)-[:ACTED_IN]->()},
-                    directedCount: count {(p)-[:DIRECTED]->()},
-                    inCommon: collect(m {.tmdbId, .title, type: type(r)})
+                .*,
+                actedCount: count {(p)-[:ACTED_IN]->()},
+                directedCount: count {(p)-[:DIRECTED]->()},
+                inCommon: inCommon
                 } AS person
                 ORDER BY size(person.inCommon) DESC
                 SKIP $skip
