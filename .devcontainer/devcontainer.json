@@ -1,6 +1,6 @@
 {
 	"name": "Building Neo4j Applications with Python course",
-	"image": "mcr.microsoft.com/devcontainers/python:1-3.12-bullseye",
+	"image": "mcr.microsoft.com/devcontainers/python:2-3.12-trixie",
 	"postCreateCommand": "bash .devcontainer/post_create.sh",
 	"portsAttributes": {
 		"3000": {
